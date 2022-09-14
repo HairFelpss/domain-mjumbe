@@ -15,21 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Expose } from "class-transformer";
+import { Expose } from 'class-transformer';
+import { IsDate, IsString } from 'class-validator';
 
-export class IBase {
-
+export default class IBase {
   @Expose()
+  @IsString()
   id: string;
 
   @Expose()
-  version: number;
+  @IsString()
+  version: string;
 
   @Expose()
-  updateDate: Date;
+  @IsDate()
+  update_date: Date;
 
   @Expose()
-  creationDate: Date;
+  @IsDate()
+  creation_date: Date;
 }
-
-export default IBase;

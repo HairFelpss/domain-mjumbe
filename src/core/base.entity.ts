@@ -14,20 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import { IsDate, IsEnum, IsEmail, IsString, ValidateIf } from 'class-validator';
 
 export class BaseEntity {
+  @IsDate()
+  creation_date: Date;
 
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
-
-  @VersionColumn()
-  version: number;
-
-  @CreateDateColumn()
-  creationDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
+  @IsDate()
+  update_date: Date;
 }
