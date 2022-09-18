@@ -8,7 +8,7 @@ import { UsersModule } from './users/users.module';
 import { AppService } from './app.service';
 import { NotificationsModule } from './notifications/notifications.module';
 import { MailModule } from './mail/mail.module';
-import { PaymentModule } from './payment/payment.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { PaymentModule } from './payment/payment.module';
     NotificationsModule,
     MailModule,
     DomainModule,
-    PaymentModule,
+    TransactionsModule,
   ],
   providers: [AppService],
 })

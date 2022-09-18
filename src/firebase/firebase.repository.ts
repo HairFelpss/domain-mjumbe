@@ -31,27 +31,32 @@ export class FirebaseRepository {
   private firebaseFirestore: Firestore;
 
   constructor() {
-    if (getApps().length === 0) {
-      this.firebaseApp = initializeAppAdmin({
-        credential: cert(
-          JSON.parse(process.env.FIREBASE_ADMIN) as ServiceAccount,
-        ),
-        //databaseURL: 'https://tutorial-auth-d9a34.firebaseio.com',
+    try {
+      if (getApps().length === 0) {
+        this.firebaseApp = initializeAppAdmin({
+          credential: cert(
+            JSON.parse(process.env.FIREBASE_ADMIN) as ServiceAccount,
+          ),
+          //databaseURL: 'https://tutorial-auth-d9a34.firebaseio.com',
+        });
+      }
+
+      initializeApp({
+        apiKey: process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.FIREBASE_APP_ID,
+        measurementId: process.env.FIREBASE_MEASUREMENT_ID,
       });
+
+      this.firebaseAuth = getAuthAdmin(this.firebaseApp);
+      this.firebaseFirestore = getFirestore();
+    } catch (err) {
+      console.log('err ===> ', err);
+      throw new Error('something went wrong at firebase constructor');
     }
-
-    initializeApp({
-      apiKey: process.env.FIREBASE_API_KEY,
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.FIREBASE_APP_ID,
-      measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-    });
-
-    this.firebaseAuth = getAuthAdmin(this.firebaseApp);
-    this.firebaseFirestore = getFirestore();
   }
 
   Authenticate = async (email: string, password: string) => {
